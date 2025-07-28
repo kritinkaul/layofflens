@@ -127,4 +127,4 @@ temp/
 *.sw?
 
 # Local Netlify folder
-.netlify 
+.netlify .npm-cache/
