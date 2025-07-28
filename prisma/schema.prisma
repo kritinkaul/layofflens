@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  industry    String
+  country     String
+  city        String?
+  size        CompanySize
+  founded     Int?
+  website     String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  layoffs Layoff[]
+
+  @@map("companies")
+}
+
+model Layoff {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  date        DateTime
+  employeesAffected Int
+  percentage  Float?
+  reason      String?
+  source      String
+  confirmed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("layoffs")
+}
+
+model Industry {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("industries")
+}
+
+model Country {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  code        String   @unique
+  region      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("countries")
+}
+
+model Analytics {
+  id          String   @id @default(cuid())
+  type        AnalyticsType
+  data        Json
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("analytics")
+}
+
+enum CompanySize {
+  STARTUP
+  SMALL
+  MEDIUM
+  LARGE
+  ENTERPRISE
+}
+
+enum AnalyticsType {
+  INDUSTRY_TRENDS
+  GEOGRAPHIC_ANALYSIS
+  TEMPORAL_ANALYSIS
+  COMPANY_COMPARISON
+  PREDICTIVE_MODEL
+} 
