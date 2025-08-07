@@ -1,5 +1,7 @@
 # 📊 LayoffLens - Layoff Data Analytics Platform
 
+https://layofflens.vercel.app/
+
 A comprehensive, real-time layoff data analytics platform that tracks workforce trends across industries and geographies. Built with Next.js, TypeScript, and Supabase.
 
 ![LayoffLens Demo](https://img.shields.io/badge/Status-Live-brightgreen)
